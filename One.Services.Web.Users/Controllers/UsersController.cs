@@ -18,6 +18,10 @@ namespace One.Services.Web.Users.Controllers
     [Authorize]
     public class UsersController(UserDbContext userDbContext, IMapper mapper, ILogger<UsersController> logger) : ControllerBase
     {
+        /// <summary>
+        /// Get list of all users 
+        /// </summary> 
+        /// <returns>List of all users if successful, if not it returns the error </returns>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -63,6 +67,10 @@ namespace One.Services.Web.Users.Controllers
             }
         }
 
+        /// <summary>
+        /// Get one individual user by id 
+        /// </summary> 
+        /// <returns>One individual user by id if successful, if not it returns the error  </returns>
         [HttpGet("{id:int}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -109,6 +117,10 @@ namespace One.Services.Web.Users.Controllers
 
         }
 
+        /// <summary>
+        /// Get one individual user by email 
+        /// </summary> 
+        /// <returns>One individual user by email if successful, if not it returns the error  </returns>
         [HttpGet("{email}")]
         public async Task<IActionResult> Get(string email)
         {
@@ -151,6 +163,11 @@ namespace One.Services.Web.Users.Controllers
             }
 
         }
+
+        /// <summary>
+        /// Create new user
+        /// </summary> 
+        /// <returns>The information of the new user, if successful, if not it returns the error </returns>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Models.Users.Payloads.UserPayload user)
         {
@@ -214,6 +231,10 @@ namespace One.Services.Web.Users.Controllers
 
         }
 
+        /// <summary>
+        /// Update an existing user  
+        /// </summary> 
+        /// <returns>The information of the updated user, if successful, if not it returns the error </returns>
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Put(int id, [FromBody] Models.Users.Payloads.UserPayload user)
         {
@@ -291,6 +312,10 @@ namespace One.Services.Web.Users.Controllers
             }
         }
 
+        /// <summary>
+        /// Deletes a user
+        /// </summary> 
+        /// <returns> the id of the deleted user, or an error if delete was not successful  </returns>
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {

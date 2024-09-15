@@ -12,6 +12,10 @@ namespace One.Services.Web.Users.Controllers
     [ApiController]
     public class AuthenticationController(IConfiguration configuration, ILogger<AuthenticationController> logger) : ControllerBase
     {
+        /// <summary>
+        /// Authenticate client to allow it to call the endpoints under users controller
+        /// </summary> 
+        /// <returns> The bearer token  </returns>
         [HttpPost("login")]
         public IActionResult Login([FromBody] Client model)
         {

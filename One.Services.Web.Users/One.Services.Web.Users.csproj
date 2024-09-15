@@ -5,6 +5,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>cb934169-de59-4451-baa1-6d3af3acc4c9</UserSecretsId>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+	  <DocumentationFile>bin\Debug\net8.0\One.Services.Web.Users.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
