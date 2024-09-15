@@ -19,13 +19,13 @@ namespace One.Services.Web.Users.Controllers
     public class UsersController(UserDbContext userDbContext, IMapper mapper, ILogger<UsersController> logger) : ControllerBase
     {
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
             try
             {
                 logger.LogInformation($"get full user list at {DateTime.UtcNow}");
 
-                var users = userDbContext.Users.ToList();
+                var users =await  userDbContext.Users.ToListAsync();
                 if (users.Count == 0)
                 {
                     logger.LogInformation($"no users found at {DateTime.UtcNow}");
@@ -64,13 +64,13 @@ namespace One.Services.Web.Users.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
 
             try
             {
                 logger.LogInformation($"get user by id ={id} at {DateTime.UtcNow}");
-                var user = userDbContext.Users.Where(u => u.Id == id).ToList();
+                var user =await userDbContext.Users.Where(u => u.Id == id).ToListAsync();
                 if (user.Count == 0)
                 {
                     logger.LogInformation($"user with  id ={id} not found at {DateTime.UtcNow}");
@@ -110,12 +110,12 @@ namespace One.Services.Web.Users.Controllers
         }
 
         [HttpGet("{email}")]
-        public IActionResult Get(string email)
+        public async Task<IActionResult> Get(string email)
         {
             try
             {
                 logger.LogInformation($"get user by email at {DateTime.UtcNow}");
-                var user = userDbContext.Users.Where(u => u.Email.ToLower() == email.ToLower()).ToList();
+                var user =await userDbContext.Users.Where(u => u.Email.ToLower() == email.ToLower()).ToListAsync();
                 if (user.Count == 0)
                 {
                     return NotFound(new ApiResponse<object>
@@ -152,7 +152,7 @@ namespace One.Services.Web.Users.Controllers
 
         }
         [HttpPost]
-        public IActionResult Post([FromBody] Models.Users.Payloads.UserPayload user)
+        public async Task<IActionResult> Post([FromBody] Models.Users.Payloads.UserPayload user)
         {
             logger.LogInformation($"Create new user at {DateTime.UtcNow}");
 
@@ -170,7 +170,7 @@ namespace One.Services.Web.Users.Controllers
                 var dbUser = mapper.Map<User>(user);
 
                 userDbContext.Users.Add(dbUser);
-                userDbContext.SaveChanges();
+                await userDbContext.SaveChangesAsync();
 
 
                 return CreatedAtAction(nameof(Post), new { id = dbUser.Id }, new ApiResponse<Models.Users.User>
@@ -215,7 +215,7 @@ namespace One.Services.Web.Users.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public IActionResult Put(int id, [FromBody] Models.Users.Payloads.UserPayload user)
+        public async Task<IActionResult> Put(int id, [FromBody] Models.Users.Payloads.UserPayload user)
         {
             logger.LogInformation($"Update new user at {DateTime.UtcNow}");
             if (!ModelState.IsValid)
@@ -251,7 +251,7 @@ namespace One.Services.Web.Users.Controllers
                 dbUser[0].DateOfBirth = user.DateOfBirth;
 
                 userDbContext.Users.Entry(dbUser[0]).State = EntityState.Modified;
-                userDbContext.SaveChanges();
+                await userDbContext.SaveChangesAsync();
 
 
                 return CreatedAtAction(nameof(Put), new { id = dbUser[0].Id }, new ApiResponse<Models.Users.User>
@@ -292,7 +292,7 @@ namespace One.Services.Web.Users.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             logger.LogInformation($"Delete user at {DateTime.UtcNow}");
 
@@ -317,7 +317,7 @@ namespace One.Services.Web.Users.Controllers
                 }
 
                 userDbContext.Users.Remove(dbUser[0]);
-                userDbContext.SaveChanges();
+                await userDbContext.SaveChangesAsync();
 
 
                 return CreatedAtAction(nameof(Delete), new { id = id }, new ApiResponse<int>
