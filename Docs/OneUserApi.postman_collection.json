@@ -1,0 +1,213 @@
+{
+	"info": {
+		"_postman_id": "4a0628a2-d9da-44f4-a8b6-7986fb206e7e",
+		"name": "OneUserApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16726799"
+	},
+	"item": [
+		{
+			"name": "Authentication/login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"Client2\",\r\n  \"password\": \"Client2Pwd\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7144/api/Authentication/login",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7144",
+					"path": [
+						"api",
+						"Authentication",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7144/api/Users",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7144",
+					"path": [
+						"api",
+						"Users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/Users/{{id}}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7144/api/Users/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7144",
+					"path": [
+						"api",
+						"Users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/Users/{{email}}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7144/api/Users/test@test.com",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7144",
+					"path": [
+						"api",
+						"Users",
+						"test@test.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/Users/",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"firstName\": \"test2\",\r\n  \"lastName\": \"test2\",\r\n  \"email\": \"user@example.com\",\r\n  \"dateOfBirth\": \"2024-09-15\",\r\n  \"phoneNumber\": 124578963\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7144/api/Users",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7144",
+					"path": [
+						"api",
+						"Users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/Users/  ",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"firstName\": \"test2\",\r\n  \"lastName\": \"test2\",\r\n  \"email\": \"user@examplde.com\",\r\n  \"dateOfBirth\": \"2000-09-15\",\r\n  \"phoneNumber\": 124578963\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7144/api/Users/3",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7144",
+					"path": [
+						"api",
+						"Users",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"pm.sendRequest({\r",
+					"    url:'https://localhost:7144/api/Authentication/login',\r",
+					"    header: {\r",
+					"        'content-type' : 'application/json'\r",
+					"    },\r",
+					"    method: 'POST',\r",
+					"    body: {\r",
+					"        mode: 'raw',\r",
+					"        raw: JSON.stringify({\r",
+					"            \"username\": \"Client2\",\r",
+					"            \"password\": \"Client2Pwd\"\r",
+					"            })\r",
+					"    }\r",
+					"}, function(err, res) {\r",
+					"    var token = res.json().token;\r",
+					"    pm.environment.set(\"token\", token);\r",
+					"    }\r",
+					");"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
